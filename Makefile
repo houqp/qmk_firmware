@@ -128,6 +128,7 @@ generate-keyboards-file:
 clean:
 	echo -n 'Deleting .build/ ... '
 	rm -rf $(BUILD_DIR)
+	make -C rust clean
 	echo 'done.'
 
 .PHONY: distclean

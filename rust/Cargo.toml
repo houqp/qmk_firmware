@@ -1,0 +1,16 @@
+[package]
+name = "qmk-keymap"
+version = "0.1.0"
+authors = ["Qingping Hou <dave2008713@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "keymap"
+crate-type = ["staticlib"]
+path = "src/lib.rs"
+
+[dependencies]
+paste = "0.1"
+
+[build-dependencies]
+bindgen = "0.*"

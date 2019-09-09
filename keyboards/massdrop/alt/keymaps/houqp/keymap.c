@@ -25,69 +25,6 @@ enum alt_keycodes {
     MD_BOOT             //Restart into bootloader after hold timeout
 };
 
-#define TG_NKRO MAGIC_TOGGLE_NKRO //Toggle 6KRO / NKRO mode
-
-keymap_config_t keymap_config;
-
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(
-        KC_GRV,         KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,  \
-        LT(3, KC_TAB),  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME, \
-        LT(2, KC_CAPS), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,  KC_PGUP, \
-        KC_LSFT,        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   KC_PGDN, \
-        KC_LCTL,        KC_LALT, KC_LGUI,                            KC_SPC,                             MO(1),   KC_RGUI, KC_LEFT, KC_DOWN, KC_RGHT  \
-    ),
-    [1] = LAYOUT(
-        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_MUTE, \
-        L_T_BR,  L_PSD,   L_BRI,   L_PSI,   L_EDG_I, _______, _______, _______, U_T_AGCR,_______, KC_PSCR, KC_SLCK, KC_PAUS, _______, KC_END,  \
-        L_T_PTD, L_PTP,   L_BRD,   L_PTN,   _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,          _______, KC_VOLU, \
-        _______, L_T_MD,  L_T_ONF, _______, L_EDG_M, MD_BOOT, TG_NKRO, _______, _______, _______, _______, _______,          KC_PGUP, KC_VOLD, \
-        _______, _______, _______,                            DBG_FAC,                            _______, _______, KC_HOME, KC_PGDN, KC_END   \
-    ),
-    [2] = LAYOUT(
-        _______,  _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,  _______,  _______,  _______, _______, \
-        _______,  KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_6,      KC_7,      KC_8,      KC_9,      KC_0,     KC_MINS,  KC_EQL,   _______, _______, \
-        _______,  _______,   _______,   _______,   _______,   _______,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   _______,  _______,            _______, _______, \
-        _______,  _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,  _______,            _______, _______, \
-        _______,  _______,   _______,                                    _______,                                    _______,  _______,  _______,  _______, _______ \
-    ),
-    [3] = LAYOUT(
-        _______,  _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,  _______,  _______,  _______, _______, \
-        _______,  KC_EXLM,   KC_AT,     KC_HASH,   KC_DLR,    KC_PERC,   KC_CIRC,   KC_AMPR,   KC_ASTR,   KC_LPRN,   KC_RPRN,  KC_UNDS,  KC_PLUS,  _______, _______, \
-        _______,  _______,   _______,   _______,   _______,   _______,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   _______,  _______,            _______, _______, \
-        _______,  _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,  _______,            _______, _______, \
-        _______,  _______,   _______,                                    _______,                                    _______,  _______,  _______,  _______, _______ \
-    ),
-};
-
-// Runs just one time when the keyboard initializes.
-void matrix_init_user(void) {
-    // TODO: check out https://www.reddit.com/r/olkb/comments/9s0sdc/massdrop_alt_addressable_rgb/e8pr73h/
-    // set default pattern to green
-    // see tmk_core/protocol/arm_atsam/led_matrix_programs.c
-
-    /* int i; */
-    /* for (i = 0; i < led_setups_count; i++) { */
-    /*     if (led_setups[i] == leds_green) { */
-    /*         led_animation_id = i; */
-    /*     } */
-    /* } */
-    led_animation_id = 5;
-
-    // decrease default light intensity
-    gcr_desired -= LED_GCR_STEP * 12;
-    if (gcr_desired < 0) {
-        gcr_desired = 0;
-    }
-
-    // only enable key lights
-    led_lighting_mode = LED_MODE_KEYS_ONLY;
-};
-
-// Runs constantly in the background, in a loop.
-void matrix_scan_user(void) {
-};
-
 #define MODS_SHIFT (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT))
 #define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
 #define MODS_ALT (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
@@ -265,13 +202,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true; //Process all other keycodes normally
     }
 }
-
-led_instruction_t led_instructions[] = {
-    //Please see ../default_md/keymap.c for examples
-
-    //All LEDs use the user's selected pattern (this is the factory default)
-     { .flags = LED_FLAG_USE_ROTATE_PATTERN },
-
-    //end must be set to 1 to indicate end of instruction set
-     { .end = 1 }
-};

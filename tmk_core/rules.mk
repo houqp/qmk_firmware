@@ -34,6 +34,7 @@ $(foreach OUTPUT,$(OUTPUTS),$(eval $(OUTPUT)_OBJ +=$(call OBJ_FROM_SRC,$(OUTPUT)
 
 # Define a list of all objects
 OBJ := $(foreach OUTPUT,$(OUTPUTS),$($(OUTPUT)_OBJ))
+RUST_OBJ := rust/rust_keymap.o
 NO_LTO_OBJ := $(filter %.a,$(OBJ))
 
 MASTER_OUTPUT := $(firstword $(OUTPUTS))
@@ -294,7 +295,7 @@ BEGIN = gccversion sizebefore
 .SECONDARY : $(BUILD_DIR)/$(TARGET).elf
 .PRECIOUS : $(OBJ)
 # Note the obj.txt depeendency is there to force linking if a source file is deleted
-%.elf: $(OBJ) $(MASTER_OUTPUT)/cflags.txt $(MASTER_OUTPUT)/ldflags.txt $(MASTER_OUTPUT)/obj.txt | $(BEGIN)
+%.elf: $(OBJ) $(RUST_OBJ) $(MASTER_OUTPUT)/cflags.txt $(MASTER_OUTPUT)/ldflags.txt $(MASTER_OUTPUT)/obj.txt | $(BEGIN)
 	@$(SILENT) || printf "$(MSG_LINKING) $@" | $(AWK_CMD)
 	$(eval CMD=$(CC) $(ALL_CFLAGS) $(filter-out %.txt,$^) --output $@ $(LDFLAGS))
 	@$(BUILD_CMD)
@@ -308,6 +309,10 @@ endif
 $1_CFLAGS = $$(ALL_CFLAGS) $$($1_DEFS) $$($1_INCFLAGS) $$($1_CONFIG_FLAGS) $$(NOLTO_CFLAGS)
 $1_CPPFLAGS= $$(ALL_CPPFLAGS) $$($1_DEFS) $$($1_INCFLAGS) $$($1_CONFIG_FLAGS) $$(NOLTO_CFLAGS)
 $1_ASFLAGS= $$(ALL_ASFLAGS) $$($1_DEFS) $$($1_INCFLAGS) $$($1_CONFIG_FLAGS)
+
+# Compile: create object file from rust source files.
+$(RUST_OBJ) : rust/src/*.rs rust/*.rs rust/Cargo.* rust/Makefile
+	BINDGEN_CFLAGS='$$($1_CFLAGS)' make -C rust
 
 # Compile: create object files from C source files.
 $1/%.o : %.c $1/%.d $1/cflags.txt $1/compiler.txt | $(BEGIN)
