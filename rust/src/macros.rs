@@ -25,10 +25,10 @@ macro_rules! keycode {
     ('(') => { KC_LPRN };
     (')') => { KC_RPRN };
     (?) => { KC_QUEST };
-    ('⯅') => { KC_UP };
-    ('⯈') => { KC_RIGHT };
-    ('⯆') => { KC_DOWN };
-    ('⯇') => { KC_LEFT };
+    ('↑') => { KC_UP };
+    ('→') => { KC_RIGHT };
+    ('↓') => { KC_DOWN };
+    ('←') => { KC_LEFT };
     ('↹') => { KC_TAB };
     ('`') => { KC_GRV };
     ('🔊') => { KC_VOLU };
@@ -38,6 +38,9 @@ macro_rules! keycode {
     (xxx) => { kb!(NO) };
     (xxxx) => { kb!(NO) };
     (xxxxx) => { kb!(NO) };
+    (xxxxxx) => { kb!(NO) };
+    (xxxxxxx) => { kb!(NO) };
+    (xxxxxxxx) => { kb!(NO) };
 
     ([$key:ident&LT{$layernu:literal}]) => {
         LT!($layernu, keycode!($key))
