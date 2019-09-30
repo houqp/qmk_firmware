@@ -25,6 +25,7 @@ macro_rules! keycode {
     ('(') => { KC_LPRN };
     (')') => { KC_RPRN };
     (?) => { KC_QUEST };
+    ('⏎') => { KC_ENTER };
     ('↑') => { KC_UP };
     ('→') => { KC_RIGHT };
     ('↓') => { KC_DOWN };
