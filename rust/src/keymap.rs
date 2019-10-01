@@ -77,7 +77,7 @@ keymaps!(
     layer!(  // layer 0
         r!(     '`'     | 1  | 2  | 3 | 4 | 5 |  6  | 7 | 8 | 9 |   0   |  -  | =  |BSPC |DEL  ),
         r!( [TAB &LT{3}]| Q  | W  | E | R | T |  Y  | U | I | O |   P   | '[' |']' |BSLS |HOME ),
-        r!( [CAPS&LT{2}]| A  | S  | D | F | G |  H  | J | K | L |   ;   |QUOTE|xxxx| '⏎' |PGUP ),
+        r!(    [MO{2}]  | A  | S  | D | F | G |  H  | J | K | L |   ;   |QUOTE|xxxx| '⏎' |PGUP ),
         r!(     LSFT    |xxxx| Z  | X | C | V |  B  | N | M | , |   .   |  /  |RSFT| '↑' |PGDN ),
         r!(     LCTL    |LALT|LGUI|xxx|xxx|xxx|SPACE|xxx|xxx|xxx|[MO{1}]|RGUI |'←' | '↓' | '→' ),
     ),

@@ -7,7 +7,7 @@ build: src/*.rs Cargo.toml build.rs
 		-- \
 		--emit=obj \
 		--codegen opt-level=3 --codegen panic=abort
-	find --version | grep gnu && { \
+	find --version 2>/dev/null | grep gnu && { \
 		ln -sf $$(find ./target/$(TARGET)/release/deps/keymap-*.o -printf '%T+ %p\n' | sort -r | head -n 1 | awk '{print $$2}') \
 			rust_keymap.o; \
 	} || { \
