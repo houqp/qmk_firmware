@@ -6,12 +6,14 @@ build: src/*.rs Cargo.toml build.rs
 	cargo rustc --lib --release --target=$(TARGET) \
 		-- \
 		--emit=obj \
-		--codegen opt-level=3 \
-		--codegen panic=abort
-	ln -sf $$(find ./target/$(TARGET)/release/deps/keymap-*.o -print0 | xargs -0 stat -f '%m %N' | sort -r | head -n 1 | awk '{print $$2}') \
-		rust_keymap.o
-	# ln -sf $$(find ./target/$(TARGET)/release/deps/keymap-*.o -printf '%T+ %p\n' | sort -r | head -n 1 | awk '{print $$2}') \
-	# 	rust_keymap.o
+		--codegen opt-level=3 --codegen panic=abort
+	find --version | grep gnu && { \
+		ln -sf $$(find ./target/$(TARGET)/release/deps/keymap-*.o -printf '%T+ %p\n' | sort -r | head -n 1 | awk '{print $$2}') \
+			rust_keymap.o; \
+	} || { \
+		ln -sf $$(find ./target/$(TARGET)/release/deps/keymap-*.o -print0 | xargs -0 stat -f '%m %N' | sort -r | head -n 1 | awk '{print $$2}') \
+			rust_keymap.o; \
+	}
 
 macro-expand:
 	rustc -Z unstable-options --pretty expanded src/keymap.rs
