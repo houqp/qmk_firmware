@@ -15,9 +15,6 @@ build: src/*.rs Cargo.toml build.rs
 			rust_keymap.o; \
 	}
 
-macro-expand:
-	rustc -Z unstable-options --pretty expanded src/keymap.rs
-
 rustc-build:
 	rustc --emit=obj \
 		--target=$(TARGET) \

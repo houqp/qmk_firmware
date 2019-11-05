@@ -2,6 +2,8 @@
 
 * libclang-dev
 * llvm-config (llvm)
+* rustup
+* `make deps`
 
 ## Develop
 
